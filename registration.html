@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">
+        <img src="D:/3 КУРС/2 СЕМЕСТР/Веб-дизайн/ЛР №1/logo.png" alt="Logo" class="logo-img" style="width: 100px; height: 70px; margin-right: 10px; margin-top: 10px;">
+	  </a>
+      <a class="navbar-brand" href="#">Phonebook</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Main menu<span class="sr-only">(current page)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="registration.html">Registration</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="login.html">Log in</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link" href="profile.html">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About the website</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1>Registration Form</h1>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of birth:</label>
+                <input type="date" class="form-control" id="dob">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+	
+	<div id="user-profile"></div>
+	
+	<footer class="bg-light py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2">
+					<p>&copy; Phonebook 2023</p>
+				</div>
+				<div class="col-md-3 text-md-right">
+					<a href="#">Profile</a>
+				</div>
+				<div class="col-md-4 text-md-right">
+					<a href="#">About the website</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+	<script>
+	$(document).ready(function() {
+  // Handle form submission
+  $('#registration-form').submit(function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    // Get the form values
+    var name = $('#name').val();
+    var email = $('#email').val();
+    var gender = $('#gender').val();
+    var dob = $('#dob').val();
+
+    // Create a user object
+    var user = {
+      name: name,
+      email: email,
+      gender: gender,
+      dob: dob
+    };
+
+    // Send the user data to the server for processing
+    $.ajax({
+      url: 'process_registration.php', // Replace with the actual server-side script
+      type: 'POST',
+      data: user,
+      success: function(response) {
+        // Clear the form
+        $('#registration-form')[0].reset();
+
+        // Display the user account information on the Profile page
+        $('#user-profile').html(response);
+      },
+      error: function(xhr, status, error) {
+        // Handle the error
+        console.log(error);
+      }
+    });
+  });
+});
+	</script>
+	
+</body>
+</html>
